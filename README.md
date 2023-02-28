@@ -10,7 +10,8 @@ export default {
   plugins: [
     posthtml({ 
       plugins: [],
-      options: {}
+      options: {},
+      root: null
     })
   ]
 }
@@ -18,4 +19,4 @@ export default {
 
 ### Requirements
 
-- [Node.js LTS (16.x)](https://nodejs.org/en/download/)
+- [Node.js LTS](https://nodejs.org/en/download/)

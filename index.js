@@ -14,10 +14,15 @@ const plugin = (pluginOptions = {}) => {
         enforce: 'pre',
         transformIndexHtml: {
             enforce: 'pre',
+            config: ({ root }) => {
+                if (!pluginOptions.root) {
+                    pluginOptions.root = root
+                }
+            },
             transform: async(html, { filename }) => {
                 const plugins = [
-                    posthtmlExtend({ encoding: 'utf8', root: dirname(filename) }),
-                    posthtmlInclude({ encoding: 'utf8', root: dirname(filename) })
+                    posthtmlExtend({ encoding: 'utf8', root: pluginOptions.root }),
+                    posthtmlInclude({ encoding: 'utf8', root: pluginOptions.root })
                 ]
 
                 const result = await posthtml(plugins.concat(...pluginOptions.plugins)).process(html, pluginOptions.options || {})
