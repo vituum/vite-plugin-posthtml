@@ -2,7 +2,7 @@ import posthtmlExtend from 'posthtml-extend'
 import posthtmlInclude from 'posthtml-include'
 import posthtml from 'posthtml'
 import { dirname } from 'path'
-import { getPackageInfo, merge } from 'vituum/utils/common.js'
+import { getPackageInfo, merge, pluginError } from 'vituum/utils/common.js'
 
 const { name } = getPackageInfo(import.meta.url)
 
@@ -29,7 +29,7 @@ const plugin = (pluginOptions = {}) => {
         enforce: 'pre',
         transformIndexHtml: {
             enforce: 'pre',
-            transform: async (html, { filename }) => {
+            transform: async (html, { filename, server }) => {
                 const plugins = []
 
                 if (pluginOptions.extend) {
@@ -40,9 +40,28 @@ const plugin = (pluginOptions = {}) => {
                     plugins.push(posthtmlInclude({ root: pluginOptions.root ? pluginOptions.root : dirname(filename), ...pluginOptions.include }))
                 }
 
-                const result = await posthtml(plugins.concat(...pluginOptions.plugins)).process(html, pluginOptions.options)
+                const render = await new Promise((resolve) => {
+                    const output = {}
 
-                return result.html
+                    posthtml(plugins.concat(...pluginOptions.plugins)).process(html, pluginOptions.options).catch((error) => {
+                        output.error = error
+                        resolve(output)
+                    }).then(result => {
+                        // @ts-ignore
+                        output.content = result?.html
+                        resolve(output)
+                    })
+                })
+
+                const renderError = pluginError(render.error, server, name)
+
+                if (renderError && server) {
+                    return
+                } else if (renderError) {
+                    return renderError
+                }
+
+                return render.content
             }
         }
     }
