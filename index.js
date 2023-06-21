@@ -7,9 +7,10 @@ import { getPackageInfo, merge, pluginError } from 'vituum/utils/common.js'
 const { name } = getPackageInfo(import.meta.url)
 
 /**
- * @type {import('@vituum/vite-plugin-posthtml/types/index.d.ts').PluginUserConfig} pluginOptions
+ * @type {import('@vituum/vite-plugin-posthtml/types').PluginUserConfig} pluginOptions
  */
 const defaultOptions = {
+    enforce: 'post',
     root: null,
     extend: {},
     include: {},
@@ -18,7 +19,7 @@ const defaultOptions = {
 }
 
 /**
- * @param {import('@vituum/vite-plugin-posthtml/types/index.d.ts').PluginUserConfig} pluginOptions
+ * @param {import('@vituum/vite-plugin-posthtml/types').PluginUserConfig} pluginOptions
  * @returns {import('vite').Plugin}
  */
 const plugin = (pluginOptions = {}) => {
@@ -26,10 +27,14 @@ const plugin = (pluginOptions = {}) => {
 
     return {
         name,
-        enforce: 'pre',
+        enforce: pluginOptions.enforce,
         transformIndexHtml: {
-            enforce: 'pre',
+            order: pluginOptions.enforce,
             transform: async (html, { filename, server }) => {
+                if (filename.replace('.html', '').endsWith('.json') && html.startsWith('{')) {
+                    return html
+                }
+
                 const plugins = []
 
                 if (pluginOptions.extend) {
