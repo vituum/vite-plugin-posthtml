@@ -10,7 +10,6 @@ const { name } = getPackageInfo(import.meta.url)
  * @type {import('@vituum/vite-plugin-posthtml/types').PluginUserConfig} pluginOptions
  */
 const defaultOptions = {
-    enforce: 'post',
     root: null,
     extend: {},
     include: {},
@@ -27,9 +26,9 @@ const plugin = (pluginOptions = {}) => {
 
     return {
         name,
-        enforce: pluginOptions.enforce,
+        enforce: 'pre',
         transformIndexHtml: {
-            order: pluginOptions.enforce,
+            order: 'pre',
             transform: async (html, { filename, server }) => {
                 if (filename.replace('.html', '').endsWith('.json') && html.startsWith('{')) {
                     return html

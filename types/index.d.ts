@@ -1,5 +1,4 @@
 export interface PluginUserConfig {
-    enforce?: 'post' | 'pre'
     root?: string
     extend?: Object
     include?: Object
