@@ -2,7 +2,7 @@ import posthtmlExtend from 'posthtml-extend'
 import posthtmlInclude from 'posthtml-include'
 import posthtml from 'posthtml'
 import { dirname } from 'path'
-import { getPackageInfo, merge, pluginError } from 'vituum/utils/common.js'
+import { getPackageInfo, merge, pluginError, normalizePath } from 'vituum/utils/common.js'
 
 const { name } = getPackageInfo(import.meta.url)
 
@@ -23,6 +23,8 @@ const defaultOptions = {
  */
 const plugin = (pluginOptions = {}) => {
     pluginOptions = merge(defaultOptions, pluginOptions)
+
+    pluginOptions.root = normalizePath(pluginOptions.root)
 
     return {
         name,
@@ -47,7 +49,7 @@ const plugin = (pluginOptions = {}) => {
                 const render = await new Promise((resolve) => {
                     const output = {}
 
-                    posthtml(plugins.concat(...pluginOptions.plugins)).process(html, pluginOptions.options).catch((error) => {
+                    posthtml(plugins.concat(...pluginOptions.plugins)).process(html, pluginOptions.options).catch(error => {
                         output.error = error
                         resolve(output)
                     }).then(result => {

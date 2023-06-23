@@ -8,15 +8,15 @@ import posthtml from '@vituum/vite-plugin-posthtml'
 
 export default {
   plugins: [
-    posthtml({ 
-      plugins: [],
-      options: {},
-      root: null
-    })
+    posthtml()
   ]
 }
 ```
 
+* Read the [docs](https://vituum.dev/plugins/posthtml.html) to learn more about the plugin options.
+* Use with [Vituum](https://vituum.dev) to get multi-page support.
+
 ### Requirements
 
-- [Node.js LTS](https://nodejs.org/en/download/)
+- [Node.js LTS (18.x)](https://nodejs.org/en/download/)
+- [Vite](https://vitejs.dev/)
