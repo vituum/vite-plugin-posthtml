@@ -24,7 +24,9 @@ const defaultOptions = {
 const plugin = (pluginOptions = {}) => {
     pluginOptions = merge(defaultOptions, pluginOptions)
 
-    pluginOptions.root = normalizePath(pluginOptions.root)
+    if (pluginOptions.root) {
+        pluginOptions.root = normalizePath(pluginOptions.root)
+    }
 
     return {
         name,
