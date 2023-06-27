@@ -5,3 +5,5 @@ export interface PluginUserConfig {
     plugins?: import('posthtml').Plugin<any>[]
     options?: import('posthtml').Options
 }
+
+export default function plugin(options?: PluginUserConfig) : import('vite').Plugin
