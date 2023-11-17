@@ -33,7 +33,7 @@ const plugin = (pluginOptions = {}) => {
         enforce: 'pre',
         transformIndexHtml: {
             order: 'pre',
-            transform: async (html, { filename, server }) => {
+            handler: async (html, { filename, server }) => {
                 if (filename.replace('.html', '').endsWith('.json') && html.startsWith('{')) {
                     return html
                 }
