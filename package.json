@@ -7,7 +7,8 @@
   "scripts": {
     "tsc": "tsc",
     "eslint": "eslint '**/*.js'",
-    "eslint-fix": "eslint '**/*.js' --fix"
+    "eslint-fix": "eslint '**/*.js' --fix",
+    "publish-next": "npm publish --tag next"
   },
   "dependencies": {
     "vituum": "^2.0.0-next.2",
@@ -35,7 +36,7 @@
     }
   },
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "repository": {
     "type": "git",
