@@ -1,42 +1,43 @@
 {
   "name": "@vituum/vite-plugin-posthtml",
-  "version": "2.0.0-next.1",
+  "version": "2.0.0-next.2",
   "type": "module",
   "main": "index.js",
   "types": "types/index.d.ts",
   "scripts": {
+    "lint": "npm run eslint && npm run tsc",
     "tsc": "tsc",
     "eslint": "eslint '**/*.js'",
     "eslint-fix": "eslint '**/*.js' --fix",
     "publish-next": "npm publish --tag next"
   },
   "dependencies": {
-    "vituum": "^2.0.0-next.2",
+    "vituum": "^2.0.0-next.8",
     "posthtml": "^0.16",
     "posthtml-extend": "^0.6",
     "posthtml-include": "^2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39",
-    "@stylistic/eslint-plugin": "^5.6",
-    "@types/node": "^25.0.3",
-    "vite": "^8.0.0-beta.3",
+    "@stylistic/eslint-plugin": "^5.7",
+    "@types/node": "^25.0",
     "eslint": "^9.39",
-    "globals": "^16.5",
-    "typescript": "^5.9.3"
+    "globals": "^17.0",
+    "typescript": "^5.9",
+    "vite": "^8.0.0-beta.8"
   },
   "files": [
     "index.js",
     "types"
   ],
   "exports": {
-    ".": "./index.js",
-    "./types/*": {
-      "types": "./types/*"
+    ".": {
+      "default": "./index.js",
+      "types": "./types/index.d.ts"
     }
   },
   "engines": {
-    "node": "^20.19.0 || >=22.12.0"
+    "node": "^24.0.0 || >=25.0.0"
   },
   "repository": {
     "type": "git",

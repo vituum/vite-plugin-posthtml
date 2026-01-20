@@ -2,7 +2,7 @@ import posthtmlExtend from 'posthtml-extend'
 import posthtmlInclude from 'posthtml-include'
 import posthtml from 'posthtml'
 import { dirname } from 'path'
-import { getPackageInfo, merge, pluginError, normalizePath } from 'vituum/utils/common.js'
+import { getPackageInfo, deepMergeWith, pluginError, normalizePath } from 'vituum/utils/common.js'
 
 const { name } = getPackageInfo(import.meta.url)
 
@@ -22,7 +22,7 @@ const defaultOptions = {
  * @returns {import('vite').Plugin}
  */
 const plugin = (pluginOptions = {}) => {
-  pluginOptions = merge(defaultOptions, pluginOptions)
+  pluginOptions = deepMergeWith(defaultOptions, pluginOptions)
 
   if (pluginOptions.root) {
     pluginOptions.root = normalizePath(pluginOptions.root)
