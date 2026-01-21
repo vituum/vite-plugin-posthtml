@@ -15,6 +15,7 @@ const defaultOptions = {
   include: {},
   plugins: [],
   options: {},
+  enforce: 'pre',
 }
 
 /**
@@ -30,9 +31,9 @@ const plugin = (pluginOptions = {}) => {
 
   return {
     name,
-    enforce: 'pre',
+    enforce: pluginOptions.enforce,
     transformIndexHtml: {
-      order: 'pre',
+      order: pluginOptions.enforce,
       handler: async (html, { filename, server }) => {
         if (filename.replace('.html', '').endsWith('.json') && html.startsWith('{')) {
           return html
